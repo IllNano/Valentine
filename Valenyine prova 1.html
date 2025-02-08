@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine Proposal</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #ffe6e6;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem; /* Titolo a 3rem */
+      color: #ff4d4d;
+      margin-bottom: 30px;
+    }
+
+    .tenor-gif-embed {
+      width: 300px;
+      height: 300px;
+      margin-bottom: 50px;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 20px;
+    }
+
+    .button {
+      font-family: 'Pacifico', cursive;
+      padding: 20px 40px;
+      font-size: 1.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .button:hover {
+      transform: scale(1.1);
+    }
+
+    .yes {
+      background-color: #66ff66;
+      color: #fff;
+    }
+
+    .no {
+      background-color: #ff6666;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Will you be my Valentine?</h1>
+  <div id="gif-container" class="tenor-gif-embed" data-postid="16191851" data-share-method="host" data-aspect-ratio="1.23552" data-width="20%">
+    <a href="https://tenor.com/view/love-loving-hold-hands-rub-face-gif-16191851">Love Loving Sticker</a>
+    from <a href="https://tenor.com/search/love-stickers">Love Stickers</a>
+  </div>
+  <!-- Script per l'embedding iniziale della gif -->
+  <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+  <div class="button-container">
+    <button class="button yes">Sì</button>
+    <button class="button no">No</button>
+  </div>
+
+  <script>
+    const yesButton = document.querySelector('.yes');
+    const noButton = document.querySelector('.no');
+    const gifContainer = document.querySelector('#gif-container');
+    const h1 = document.querySelector('h1');
+    const buttonContainer = document.querySelector('.button-container');
+
+    // Variabili per tenere traccia della scala corrente dei bottoni
+    let yesScale = 1;
+    let noScale = 1;
+
+    // Azione per il tasto Sì
+    yesButton.addEventListener('click', () => {
+      // Cambia il testo del titolo
+      h1.textContent = 'YIIIPPIIIEEEEE!!!';
+
+      // Sostituisce la gif con quella nuova (senza il tag <script>)
+      gifContainer.innerHTML = `
+        <div class="tenor-gif-embed" data-postid="3971686153073610452" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+          <a href="https://tenor.com/view/cat-jump-happy-happy-happy-gif-3971686153073610452">
+            Cat Jump Happy Happy Happy Sticker
+          </a>
+          from <a href="https://tenor.com/search/cat+jump-stickers">Cat Jump Stickers</a>
+        </div>
+      `;
+
+      // Crea e aggiunge dinamicamente il tag <script> per re-inizializzare l'embedding Tenor
+      const newScript = document.createElement('script');
+      newScript.type = 'text/javascript';
+      newScript.async = true;
+      newScript.src = 'https://tenor.com/embed.js';
+      gifContainer.appendChild(newScript);
+
+      // Nasconde i tasti
+      buttonContainer.style.display = 'none';
+    });
+
+    // Azione per il tasto No
+    noButton.addEventListener('click', () => {
+      // Riduce la scala del bottone "No" (l'intero bottone diventa più piccolo)
+      noScale *= 0.9;
+      noButton.style.transform = `scale(${noScale})`;
+
+      // Aumenta la scala del bottone "Sì"
+      yesScale *= 1.1;
+      yesButton.style.transform = `scale(${yesScale})`;
+    });
+  </script>
+</body>
+</html>
