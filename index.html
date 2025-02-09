@@ -64,7 +64,6 @@
       gap: 20px;
       justify-content: center;
       margin-top: -10px;
-      position: relative;
     }
     .button {
       font-family: 'Pacifico', cursive;
@@ -110,11 +109,9 @@
     <a href="https://tenor.com/view/love-loving-hold-hands-rub-face-gif-16191851">Love Loving Sticker</a>
     from <a href="https://tenor.com/search/love-stickers">Love Stickers</a>
   </div>
-  <!-- Script per l'embedding iniziale della GIF -->
   <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
   
   <div class="button-container" id="button-container">
-    <!-- Sostituito "Sì" con "Szi <3" -->
     <button class="button yes" id="yes-btn">Szi <3</button>
     <button class="button no" id="no-btn">Mi uncia</button>
   </div>
@@ -129,8 +126,6 @@
     let yesScale = 1;
     let noScale = 1;
     let noPressCount = 0;
-    let initialPositionsSet = false;
-    let initialNoLeft, initialNoTop;
 
     noButton.addEventListener('click', () => {
       noPressCount++;
@@ -148,35 +143,22 @@
         noButton.innerText = "Subita";
       }
 
-      // Imposta la posizione iniziale dei bottoni
-      if (!initialPositionsSet) {
-        initialNoLeft = noButton.offsetLeft;
-        initialNoTop = noButton.offsetTop;
-        yesButton.style.position = "absolute";
-        noButton.style.position = "absolute";
-        yesButton.style.left = `${initialNoLeft}px`;
-        yesButton.style.top = `${initialNoTop}px`;
-        noButton.style.left = `${initialNoLeft}px`;
-        noButton.style.top = `${initialNoTop}px`;
-        initialPositionsSet = true;
-      }
-
-      // Scala i bottoni (fattore 1.3x)
-      noScale *= (1 / 1.3); // "No" diventa 1.3 volte più piccolo
+      // Scala i bottoni
+      noScale *= (1 / 1.3); // "No" diventa più piccolo
       noButton.style.transform = `scale(${noScale})`;
-      yesScale *= 1.3;      // "Szi <3" diventa 1.3 volte più grande
+      yesScale *= 1.3;      // "Szi <3" diventa più grande
       yesButton.style.transform = `scale(${yesScale})`;
     });
 
     yesButton.addEventListener('click', () => {
-      // Aggiorna il titolo in "YIPPIIEEE!" (font-size ridotto, testo in una sola riga)
+      // Aggiorna il titolo in "YIPPIIEEE!"
       h1.textContent = "YIPPIIEEE!";
       h1.style.fontSize = "3rem";
       h1.style.whiteSpace = "nowrap";
       h1.style.overflow = "hidden";
       h1.classList.add("animate-title");
 
-      // Sostituisce la prima GIF con la seconda (embed centrato, data-width="70%")
+      // Sostituisce la prima GIF con la seconda
       gifContainer.innerHTML = `
         <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
           <div class="tenor-gif-embed" data-postid="3971686153073610452" data-share-method="host" data-aspect-ratio="1" data-width="70%">
@@ -187,6 +169,7 @@
           </div>
         </div>
       `;
+
       // Re-inizializza l'embed di Tenor per la seconda GIF
       const newScript = document.createElement('script');
       newScript.type = 'text/javascript';
@@ -202,13 +185,10 @@
       loveText.style.textAlign = "center";
       loveText.style.marginTop = "10px";
       loveText.style.fontFamily = "'Pacifico', cursive";
-      // Imposta lo stesso colore del testo (es. come il titolo)
       loveText.style.color = "#ff4d4d";
       gifContainer.appendChild(loveText);
 
-      // Resetta le trasformazioni e rimuove il container dei bottoni
-      yesButton.style.transform = "scale(1)";
-      noButton.style.transform = "scale(1)";
+      // Rimuove il container dei bottoni
       buttonContainer.innerHTML = "";
     });
   </script>
