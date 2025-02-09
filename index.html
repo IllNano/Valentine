@@ -74,6 +74,9 @@
       border-radius: 8px;
       cursor: pointer;
       transition: transform 0.2s ease;
+      /* Impedisce lo spostamento laterale durante il ridimensionamento */
+      transform-origin: center;
+      flex-shrink: 0;
     }
 
     .button:hover {
@@ -131,7 +134,6 @@
     let yesScale = 1;
     let noScale = 1;
     let noPressCount = 0;
-    let initialPositionsSet = false;
 
     noButton.addEventListener('click', () => {
       noPressCount++;
