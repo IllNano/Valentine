@@ -76,16 +76,28 @@
     }
 
     /* Stili per la parte principale */
-    #gif-container {
-      width: 450px !important;
-      height: 450px !important;
+    /* Contenitore per la prima gif (che cambia con "No") */
+    #gif-container1 {
+      width: 450px;
+      height: 450px;
       margin-bottom: 30px;
     }
-
-    #gif-container iframe,
-    #gif-container img {
-      width: 100% !important;
-      height: 100% !important;
+    /* La prima gif è un'immagine */
+    #gif-container1 img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    /* Contenitore per la seconda gif (che mostra yippie.gif quando si preme Szi) */
+    #gif-container2 {
+      width: 450px;
+      height: 450px;
+      margin-bottom: 30px;
+    }
+    #gif-container2 img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
 
@@ -113,9 +125,9 @@
     }
 
     @media (max-width: 600px) {
-      #gif-container {
-        width: 80vw !important;
-        height: 80vw !important;
+      #gif-container1, #gif-container2 {
+        width: 80vw;
+        height: 80vw;
       }
       h1 {
         font-size: 3rem;
@@ -147,12 +159,13 @@
   <!-- Main Page (nascosta inizialmente) -->
   <div id="main-page" style="display:none;">
     <h1>Will you be my Valentine?💚</h1>
-    <div id="gif-container" class="tenor-gif-embed" 
-         data-postid="16191851" data-share-method="host" data-aspect-ratio="1" data-width="100%">
-      <a href="https://tenor.com/view/love-loving-hold-hands-rub-face-gif-16191851">Love Loving Sticker</a>
-      from <a href="https://tenor.com/search/love-stickers">Love Stickers</a>
+    <!-- Contenitore per la prima gif: inizialmente mostra baci1.gif -->
+    <div id="gif-container1">
+      <img id="first-gif" src="baci1.gif" alt="Baci GIF">
     </div>
-    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+    <!-- Contenitore per la seconda gif: inizialmente vuoto -->
+    <div id="gif-container2"></div>
+    
     <div class="button-container" id="button-container">
       <button class="button yes" id="yes-btn">Szi💚</button>
       <button class="button no" id="no-btn">Mi uncia</button>
@@ -167,7 +180,7 @@
     const initialMusic = document.getElementById('bg-music-initial');
 
     landingBtn.addEventListener('click', () => {
-      // Avvia la musica iniziale (se non è già in riproduzione)
+      // Avvia la musica iniziale se non è già in riproduzione
       if (initialMusic.paused) {
         initialMusic.play().catch((error) =>
           console.log("Errore nella riproduzione di forever.mp3:", error)
@@ -182,13 +195,18 @@
     const yesButton = document.getElementById('yes-btn');
     const noButton = document.getElementById('no-btn');
     const mainTitle = mainPage.querySelector('h1'); // Il titolo principale
-    const gifContainer = document.getElementById('gif-container');
+    const gifContainer1 = document.getElementById('gif-container1'); // Per la prima gif
+    const firstGifImg = document.getElementById('first-gif');   // L'img dentro il primo container
+    const gifContainer2 = document.getElementById('gif-container2'); // Per la seconda gif
     const buttonContainer = document.getElementById('button-container');
     const yesMusic = document.getElementById('bg-music-yes');
 
     let yesScale = 1;
     let noScale = 1;
     let noPressCount = 0;
+
+    // Array delle gif per i baci (la "prima gif")
+    const baciGifs = ["baci1.gif", "baci2.gif", "baci3.gif", "baci4.gif"];
 
     noButton.addEventListener('click', () => {
       noPressCount++;
@@ -209,10 +227,16 @@
         noButton.innerText = "Subita Max";
       }
 
+      // Aggiorna la scala dei bottoni
       noScale *= (1 / 1.3);
       noButton.style.transform = `scale(${noScale})`;
       yesScale *= 1.3;
       yesButton.style.transform = `scale(${yesScale})`;
+
+      // Aggiorna la prima gif in base al numero di pressioni
+      // Usiamo l'indice ciclico (0-3)
+      const index = (noPressCount - 1) % baciGifs.length;
+      firstGifImg.src = baciGifs[index];
     });
 
     yesButton.addEventListener('click', () => {
@@ -235,23 +259,10 @@
       mainTitle.style.overflow = "hidden";
       mainTitle.classList.add("animate-title");
 
-      gifContainer.innerHTML = `
-        <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
-          <div class="tenor-gif-embed" data-postid="3971686153073610452" data-share-method="host" data-aspect-ratio="1" data-width="70%">
-            <a href="https://tenor.com/view/cat-jump-happy-happy-happy-gif-3971686153073610452">
-              Cat Jump Sticker
-            </a>
-            from <a href="https://tenor.com/search/cat+jump-stickers">Cat Jump Stickers</a>
-          </div>
-        </div>
-      `;
+      // Imposta la seconda gif a yippie.gif
+      gifContainer2.innerHTML = `<img src="yippie.gif" alt="Yippie GIF">`;
 
-      const newScript = document.createElement('script');
-      newScript.type = 'text/javascript';
-      newScript.async = true;
-      newScript.src = 'https://tenor.com/embed.js';
-      gifContainer.appendChild(newScript);
-
+      // Aggiungi il testo "Ti Amo" sotto (opzionale)
       const loveText = document.createElement('div');
       loveText.innerText = "Ti Amo💚💚💚";
       loveText.style.fontSize = "10vw";
@@ -260,7 +271,7 @@
       loveText.style.marginTop = "10px";
       loveText.style.fontFamily = "'cuori2', Arial, sans-serif";
       loveText.style.color = "#ff4d4d";
-      gifContainer.appendChild(loveText);
+      gifContainer2.appendChild(loveText);
 
       yesButton.style.transform = "scale(1)";
       noButton.style.transform = "scale(1)";
