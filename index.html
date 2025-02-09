@@ -17,6 +17,7 @@
       padding: 10px;
       background-color: #ffe6e6;
       font-family: Arial, sans-serif;
+      overflow-x: hidden; /* Evita scroll orizzontale */
     }
 
     h1 {
@@ -25,18 +26,21 @@
       color: #ff4d4d;
       margin-bottom: 30px;
       text-align: center;
+      max-width: 90vw;
+      word-wrap: break-word;
     }
 
     /* Contenitore della gif */
     #gif-container {
-      width: 300px;
-      height: 300px;
+      width: 500px;
+      height: 500px;
       margin-bottom: 50px;
     }
 
     .button-container {
       display: flex;
       gap: 20px;
+      justify-content: center;
     }
 
     .button {
@@ -63,23 +67,18 @@
       color: #fff;
     }
 
-    /* Media query per dispositivi con schermo piccolo */
+    /* Media query per dispositivi mobili */
     @media (max-width: 600px) {
       #gif-container {
-        width: 100%;
-        max-width: 300px;
-        height: auto;
+        width: 90vw;
+        height: 90vw;  /* Mantiene il contenitore quadrato */
       }
-      .button-container {
-        flex-direction: column;
-        gap: 10px;
-        width: 100%;
-        align-items: center;
+      h1 {
+        font-size: 2rem;
+        max-width: 90vw;
       }
       .button {
-        width: 100%;
-        max-width: 300px;
-        padding: 15px;
+        padding: 10px 20px;
         font-size: 1.5rem;
       }
     }
@@ -109,7 +108,7 @@
     let yesScale = 1;
     let noScale = 1;
 
-    // Azione per il tasto Sì
+    // Azione per il tasto "Sì"
     yesButton.addEventListener('click', () => {
       h1.textContent = 'YIIIPPIIIEEEEE!!!';
       gifContainer.innerHTML = `
@@ -120,7 +119,7 @@
           from <a href="https://tenor.com/search/cat+jump-stickers">Cat Jump Stickers</a>
         </div>
       `;
-      // Crea e aggiunge dinamicamente il tag <script> per re-inizializzare l'embedding Tenor
+      // Crea e aggiunge dinamicamente il tag <script> per re-inizializzare l'embedding di Tenor
       const newScript = document.createElement('script');
       newScript.type = 'text/javascript';
       newScript.async = true;
@@ -130,7 +129,7 @@
       buttonContainer.style.display = 'none';
     });
 
-    // Azione per il tasto No
+    // Azione per il tasto "No"
     noButton.addEventListener('click', () => {
       // Riduce la scala del bottone "No"
       noScale *= 0.9;
