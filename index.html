@@ -58,12 +58,13 @@
       object-fit: cover;
     }
 
-    /* Contenitore dei bottoni: inizialmente in flex */
+    /* Contenitore dei bottoni */
     .button-container {
       display: flex;
       gap: 20px;
       justify-content: center;
       margin-top: -10px;
+      position: relative;
     }
     .button {
       font-family: 'Pacifico', cursive;
@@ -142,34 +143,31 @@
         noButton.innerText = "Atroce";
       }
 
-      // Imposta il container dei bottoni in modalità "overlap"
+      // Imposta i bottoni in posizione assoluta, mantenendo la loro posizione corrente
       if (yesButton.style.position !== "absolute") {
-        // Converti il layout in posizione assoluta
         buttonContainer.style.position = "relative";
-        const containerRect = buttonContainer.getBoundingClientRect();
-        const noRect = noButton.getBoundingClientRect();
-        const offsetLeft = noRect.left - containerRect.left;
-        const offsetTop = noRect.top - containerRect.top;
+        const offsetLeft = noButton.offsetLeft;
+        const offsetTop = noButton.offsetTop;
         yesButton.style.position = "absolute";
         noButton.style.position = "absolute";
         yesButton.style.left = offsetLeft + "px";
         yesButton.style.top = offsetTop + "px";
         noButton.style.left = offsetLeft + "px";
         noButton.style.top = offsetTop + "px";
-        // Imposta il tasto "No" su un piano superiore
+        // Il tasto "No" in piano superiore
         noButton.style.zIndex = 2;
         yesButton.style.zIndex = 1;
       }
 
-      // Varia la scala dei bottoni (fattore 1.3x)
-      noScale *= (1 / 1.3); // il tasto "No" diventa 1.3 volte più piccolo
+      // Scala i bottoni (fattore 1.3x)
+      noScale *= (1 / 1.3); // "No" diventa 1.3 volte più piccolo
       noButton.style.transform = `scale(${noScale})`;
-      yesScale *= 1.3;      // il tasto "Szi <3" diventa 1.3 volte più grande
+      yesScale *= 1.3;      // "Szi <3" diventa 1.3 volte più grande
       yesButton.style.transform = `scale(${yesScale})`;
     });
 
     yesButton.addEventListener('click', () => {
-      // Aggiorna il titolo in "YIPPIIEEE!" (con font-size ridotto e senza andare a capo)
+      // Aggiorna il titolo in "YIPPIIEEE!" (font-size ridotto, testo in una sola riga)
       h1.textContent = "YIPPIIEEE!";
       h1.style.fontSize = "3rem";
       h1.style.whiteSpace = "nowrap";
@@ -197,15 +195,16 @@
       // Aggiunge sotto la seconda GIF il testo "Ti Amo <3"
       const loveText = document.createElement('div');
       loveText.innerText = "Ti Amo <3";
-      loveText.style.fontSize = "8vw";
+      loveText.style.fontSize = "10vw";
       loveText.style.whiteSpace = "nowrap";
       loveText.style.textAlign = "center";
       loveText.style.marginTop = "10px";
-      // Applica il font "Pacifico" anche a questo testo
       loveText.style.fontFamily = "'Pacifico', cursive";
+      // Imposta lo stesso colore del testo (es. come il titolo)
+      loveText.style.color = "#ff4d4d";
       gifContainer.appendChild(loveText);
 
-      // Resetta le trasformazioni e rimuove il container dei bottoni per evitare artifact
+      // Resetta le trasformazioni e rimuove il container dei bottoni
       yesButton.style.transform = "scale(1)";
       noButton.style.transform = "scale(1)";
       buttonContainer.innerHTML = "";
