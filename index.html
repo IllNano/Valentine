@@ -31,10 +31,19 @@
       80% { transform: scale(0.95); }
       100% { transform: scale(1); }
     }
-    /* Animazione fadeIn per le GIF */
+    /* Animazione fadeIn per le GIF e per il titolo della main page */
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
+    }
+    /* Animazione popIn per il testo "Ti Amo" */
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      60% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    .pop-in {
+      animation: popIn 0.8s ease-out;
     }
     h1 {
       font-family: 'cuori2', Arial, sans-serif;
@@ -102,7 +111,7 @@
     /* Contenitore per la gif dei baci (ulteriormente ridotto) */
     #gif-container1 {
       width: 90vw !important;
-      max-width: 250px;
+      max-width: 220px;
       margin-bottom: 10px;
       animation: fadeIn 1s ease-in-out;
     }
@@ -117,7 +126,7 @@
     /* Contenitore per la gif yippie (ulteriormente ridotto) */
     #gif-container2 {
       width: 90vw !important;
-      max-width: 250px;
+      max-width: 220px;
       margin-bottom: 10px;
       animation: fadeIn 1s ease-in-out;
     }
@@ -138,6 +147,10 @@
       padding: 20px;
       box-sizing: border-box;
     }
+    /* Animazione per il titolo della main page */
+    #main-page h1 {
+      animation: fadeIn 1s ease-out;
+    }
     /* I pulsanti sono ora impilati verticalmente */
     .button-container {
       display: flex;
@@ -145,7 +158,7 @@
       gap: 10px;
       justify-content: center;
       width: 100%;
-      max-width: 250px;
+      max-width: 220px;
     }
     @keyframes slideIn {
       from {
@@ -225,7 +238,7 @@
     // Gestione della pagina principale
     const yesButton = document.getElementById('yes-btn');
     const noButton = document.getElementById('no-btn');
-    const mainTitle = mainPage.querySelector('h1'); // Titolo principale
+    const mainTitle = mainPage.querySelector('h1'); // Titolo principale ("Will you be my Valentine?💚")
     const gifContainer1 = document.getElementById('gif-container1'); // Contenitore per i baci
     const firstGifImg = document.getElementById('first-gif');   // L'immagine dei baci
     const gifContainer2 = document.getElementById('gif-container2'); // Contenitore per yippie
@@ -297,15 +310,16 @@
       gifContainer1.style.display = 'none';
       // Mostra la gif yippie nel secondo contenitore
       gifContainer2.innerHTML = `<img src="yippie.gif" alt="Yippie GIF">`;
-      // Aggiungi il testo "Ti Amo" sotto la gif yippie
+      // Aggiungi il testo "Ti Amo" sotto la gif yippie con animazione pop-in
       const loveText = document.createElement('div');
       loveText.innerText = "Ti Amo💚💚💚";
-      loveText.style.fontSize = "10vw";
+      loveText.style.fontSize = "12vw"; // Aumentato
       loveText.style.whiteSpace = "nowrap";
       loveText.style.textAlign = "center";
-      loveText.style.marginTop = "10px";
+      loveText.style.marginTop = "5px";  // Distanza ridotta
       loveText.style.fontFamily = "'cuori2', Arial, sans-serif";
       loveText.style.color = "#ff4d4d";
+      loveText.classList.add('pop-in');
       gifContainer2.appendChild(loveText);
       yesButton.style.transform = "scale(1)";
       noButton.style.transform = "scale(1)";
