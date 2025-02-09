@@ -76,28 +76,27 @@
     }
 
     /* Stili per la parte principale */
-    /* Contenitore per la prima gif (che cambia con "No") */
+    /* Contenitore per la prima gif (baci) */
     #gif-container1 {
-      width: 450px;
-      height: 450px;
+      width: 450px !important;
+      height: 450px !important;
       margin-bottom: 30px;
     }
-    /* La prima gif è un'immagine */
     #gif-container1 img {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      height: 100% !important;
       object-fit: cover;
     }
-    
-    /* Contenitore per la seconda gif (che mostra yippie.gif quando si preme Szi) */
+
+    /* Contenitore per la seconda gif (yippie) */
     #gif-container2 {
-      width: 450px;
-      height: 450px;
+      width: 450px !important;
+      height: 450px !important;
       margin-bottom: 30px;
     }
     #gif-container2 img {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      height: 100% !important;
       object-fit: cover;
     }
 
@@ -126,8 +125,8 @@
 
     @media (max-width: 600px) {
       #gif-container1, #gif-container2 {
-        width: 80vw;
-        height: 80vw;
+        width: 80vw !important;
+        height: 80vw !important;
       }
       h1 {
         font-size: 3rem;
@@ -195,9 +194,9 @@
     const yesButton = document.getElementById('yes-btn');
     const noButton = document.getElementById('no-btn');
     const mainTitle = mainPage.querySelector('h1'); // Il titolo principale
-    const gifContainer1 = document.getElementById('gif-container1'); // Per la prima gif
-    const firstGifImg = document.getElementById('first-gif');   // L'img dentro il primo container
-    const gifContainer2 = document.getElementById('gif-container2'); // Per la seconda gif
+    const gifContainer1 = document.getElementById('gif-container1'); // Contenitore per i baci
+    const firstGifImg = document.getElementById('first-gif');   // L'immagine nel contenitore dei baci
+    const gifContainer2 = document.getElementById('gif-container2'); // Contenitore per la gif yippie
     const buttonContainer = document.getElementById('button-container');
     const yesMusic = document.getElementById('bg-music-yes');
 
@@ -205,7 +204,7 @@
     let noScale = 1;
     let noPressCount = 0;
 
-    // Array delle gif per i baci (la "prima gif")
+    // Array delle gif per i baci
     const baciGifs = ["baci1.gif", "baci2.gif", "baci3.gif", "baci4.gif"];
 
     noButton.addEventListener('click', () => {
@@ -233,10 +232,12 @@
       yesScale *= 1.3;
       yesButton.style.transform = `scale(${yesScale})`;
 
-      // Aggiorna la prima gif in base al numero di pressioni
-      // Usiamo l'indice ciclico (0-3)
-      const index = (noPressCount - 1) % baciGifs.length;
-      firstGifImg.src = baciGifs[index];
+      // Aggiorna la prima gif: se noPressCount <= 4, cambia nell'ordine; altrimenti resta su baci4.gif.
+      if (noPressCount <= 4) {
+        firstGifImg.src = baciGifs[noPressCount - 1];
+      } else {
+        firstGifImg.src = baciGifs[3];
+      }
     });
 
     yesButton.addEventListener('click', () => {
@@ -259,10 +260,13 @@
       mainTitle.style.overflow = "hidden";
       mainTitle.classList.add("animate-title");
 
-      // Imposta la seconda gif a yippie.gif
+      // Nascondi le gif dei baci
+      gifContainer1.style.display = 'none';
+
+      // Mostra la gif yippie nel secondo contenitore
       gifContainer2.innerHTML = `<img src="yippie.gif" alt="Yippie GIF">`;
 
-      // Aggiungi il testo "Ti Amo" sotto (opzionale)
+      // Aggiungi il testo "Ti Amo" sotto la gif yippie
       const loveText = document.createElement('div');
       loveText.innerText = "Ti Amo💚💚💚";
       loveText.style.fontSize = "10vw";
