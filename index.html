@@ -5,22 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Valentine Proposal</title>
   <style>
-    /* Definizione del font per header e body (cuori2.ttf) */
+    /* Definizione del font personalizzato: cuori2.ttf */
     @font-face {
       font-family: 'cuori2';
       src: url('cuori2.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
     }
-    /* Definizione del font per i pulsanti (cuori1.ttf) */
-    @font-face {
-      font-family: 'cuori1';
-      src: url('cuori1.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
 
-    /* Body e header useranno il font cuori2 */
     body {
       display: flex;
       flex-direction: column;
@@ -30,6 +22,7 @@
       margin: 0;
       padding-top: 10px;
       background-color: #ffe6e6;
+      /* Usa il font cuori2 per tutto il sito */
       font-family: 'cuori2', Arial, sans-serif;
       overflow-x: hidden;
     }
@@ -55,9 +48,9 @@
       background-color: #ffe6e6;
     }
 
-    /* I pulsanti useranno il font cuori1 */
+    /* I pulsanti useranno il font cuori2 */
     .button {
-      font-family: 'cuori1', Arial, sans-serif;
+      font-family: 'cuori2', Arial, sans-serif;
       padding: 25px 50px;
       font-size: 2rem;
       border: none;
@@ -148,12 +141,12 @@
   <!-- Landing Page -->
   <div id="landing-page">
     <h1>Ciao Amore!!</h1>
-    <button class="button" id="landing-btn">Ciao Patators</button>
+    <button class="button" id="landing-btn">Ciao!!</button>
   </div>
 
   <!-- Main Page (nascosta inizialmente) -->
   <div id="main-page" style="display:none;">
-    <h1>Will you be my Valentine?</h1>
+    <h1>Will you be my Valentine?💚</h1>
     <div id="gif-container" class="tenor-gif-embed" 
          data-postid="16191851" data-share-method="host" data-aspect-ratio="1" data-width="100%">
       <a href="https://tenor.com/view/love-loving-hold-hands-rub-face-gif-16191851">Love Loving Sticker</a>
@@ -161,7 +154,7 @@
     </div>
     <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
     <div class="button-container" id="button-container">
-      <button class="button yes" id="yes-btn">Szi <3</button>
+      <button class="button yes" id="yes-btn">Szi💚</button>
       <button class="button no" id="no-btn">Mi uncia</button>
     </div>
   </div>
@@ -174,7 +167,7 @@
     const initialMusic = document.getElementById('bg-music-initial');
 
     landingBtn.addEventListener('click', () => {
-      // Prova ad avviare la musica iniziale se non è già in riproduzione
+      // Avvia la musica iniziale (se non è già in riproduzione)
       if (initialMusic.paused) {
         initialMusic.play().catch((error) =>
           console.log("Errore nella riproduzione di forever.mp3:", error)
@@ -203,7 +196,7 @@
       if (noPressCount === 1) {
         noButton.innerText = "Ti prego";
       } else if (noPressCount === 2) {
-        noButton.innerText = "Per favore :(";
+        noButton.innerText = "Per favore🥺";
       } else if (noPressCount === 3) {
         noButton.innerText = "Ti supplico amore";
       } else if (noPressCount === 4) {
@@ -223,7 +216,7 @@
     });
 
     yesButton.addEventListener('click', () => {
-      // Cambio musica: fermo la musica iniziale e avvio quella del "Szi"
+      // Cambio musica: ferma la musica iniziale e avvia quella del "Szi"
       if (initialMusic) {
         initialMusic.pause();
       }
@@ -265,7 +258,6 @@
       loveText.style.whiteSpace = "nowrap";
       loveText.style.textAlign = "center";
       loveText.style.marginTop = "10px";
-      // Per il testo "Ti Amo" si usa anche qui il font cuori2
       loveText.style.fontFamily = "'cuori2', Arial, sans-serif";
       loveText.style.color = "#ff4d4d";
       gifContainer.appendChild(loveText);
