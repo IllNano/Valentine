@@ -83,15 +83,15 @@
     .button:hover {
       transform: scale(1.1);
     }
-    /* Contenitore per la gif dei baci (ridotto a 400px) */
+    /* Contenitore per la gif dei baci */
     #gif-container1 {
-      width: 10px !important;
-      height: 10px !important;
-      margin-bottom: 0;
+      width: 90vw !important;
+      max-width: 400px;
+      margin-bottom: 10px;
     }
     #gif-container1 img {
       width: 100% !important;
-      height: 80% !important;
+      height: auto !important;
       object-fit: cover;
       display: block;
       margin: 0;
@@ -99,23 +99,35 @@
     }
     /* Contenitore per la gif yippie */
     #gif-container2 {
-      width: 50px !important;
-      height: 50px !important;
+      width: 90vw !important;
+      max-width: 400px;
       margin-bottom: 10px;
     }
     #gif-container2 img {
       width: 100% !important;
-      height: 80% !important;
+      height: auto !important;
       object-fit: cover;
+      display: block;
+    }
+    /* Layout della main page: uso flex per distribuire verticalmente gli elementi e garantire che i pulsanti siano raggiungibili senza scroll */
+    #main-page {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #ffe6e6;
     }
     /* I pulsanti sono ora impilati verticalmente */
     .button-container {
       display: flex;
       flex-direction: column;
-      gap: 0px;
+      gap: 10px;
       justify-content: center;
-      margin-top: 0px; /* spazio ridotto tra gif e pulsanti */
-      position: relative;
+      width: 100%;
+      max-width: 400px;
     }
     @keyframes slideIn {
       from {
@@ -130,11 +142,8 @@
     .animate-title {
       animation: slideIn 0.5s ease forwards;
     }
-    @media (max-width: 50px) {
-      #gif-container1, #gif-container2 {
-        width: 80vw !important;
-        height: 10vw !important;
-      }
+    /* Media query per dispositivi più piccoli */
+    @media (max-width: 500px) {
       h1 {
         font-size: 3rem;
       }
@@ -158,12 +167,12 @@
 
   <!-- Landing Page -->
   <div id="landing-page">
-    <h1>Ciao Amore!!2</h1>
+    <h1>Ciao Amore!!3</h1>
     <button id="landing-btn" class="button">Ciao patators!!</button>
   </div>
 
   <!-- Main Page (nascosta inizialmente) -->
-  <div id="main-page" style="display:none;">
+  <div id="main-page">
     <h1>Will you be my Valentine?💚</h1>
     <!-- Contenitore per la gif dei baci: inizialmente mostra baci1.gif -->
     <div id="gif-container1">
@@ -192,7 +201,7 @@
         );
       }
       landingPage.style.display = 'none';
-      mainPage.style.display = 'block';
+      mainPage.style.display = 'flex';
     });
 
     // Gestione della pagina principale
