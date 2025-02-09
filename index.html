@@ -116,7 +116,7 @@
   <div class="button-container" id="button-container">
     <!-- Sostituito "Sì" con "Szi <3" -->
     <button class="button yes" id="yes-btn">Szi <3</button>
-    <button class="button no" id="no-btn">No</button>
+    <button class="button no" id="no-btn">Mi uncia</button>
   </div>
 
   <script>
@@ -129,34 +129,36 @@
     let yesScale = 1;
     let noScale = 1;
     let noPressCount = 0;
+    let initialPositionsSet = false;
+    let initialNoLeft, initialNoTop;
 
     noButton.addEventListener('click', () => {
       noPressCount++;
-      // Aggiorna il testo del tasto "No" secondo la sequenza
+
+      // Imposta i testi progressivi del bottone "No"
       if (noPressCount === 1) {
         noButton.innerText = "Per favore!!";
       } else if (noPressCount === 2) {
         noButton.innerText = "Ti prego";
       } else if (noPressCount === 3) {
         noButton.innerText = "Ti supplico ti amo sei l'amore mio";
-      } else if (noPressCount >= 4) {
+      } else if (noPressCount === 4) {
         noButton.innerText = "Atroce";
+      } else if (noPressCount >= 5) {
+        noButton.innerText = "Subita";
       }
 
-      // Imposta i bottoni in posizione assoluta, mantenendo la loro posizione corrente
-      if (yesButton.style.position !== "absolute") {
-        buttonContainer.style.position = "relative";
-        const offsetLeft = noButton.offsetLeft;
-        const offsetTop = noButton.offsetTop;
+      // Imposta la posizione iniziale dei bottoni
+      if (!initialPositionsSet) {
+        initialNoLeft = noButton.offsetLeft;
+        initialNoTop = noButton.offsetTop;
         yesButton.style.position = "absolute";
         noButton.style.position = "absolute";
-        yesButton.style.left = offsetLeft + "px";
-        yesButton.style.top = offsetTop + "px";
-        noButton.style.left = offsetLeft + "px";
-        noButton.style.top = offsetTop + "px";
-        // Il tasto "No" in piano superiore
-        noButton.style.zIndex = 2;
-        yesButton.style.zIndex = 1;
+        yesButton.style.left = `${initialNoLeft}px`;
+        yesButton.style.top = `${initialNoTop}px`;
+        noButton.style.left = `${initialNoLeft}px`;
+        noButton.style.top = `${initialNoTop}px`;
+        initialPositionsSet = true;
       }
 
       // Scala i bottoni (fattore 1.3x)
