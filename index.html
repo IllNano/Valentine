@@ -11,10 +11,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start; /* Contenuto allineato in alto */
+      justify-content: flex-start;
       min-height: 100vh;
       margin: 0;
-      padding-top: 10px; /* Poco spazio sopra */
+      padding-top: 10px;
       background-color: #ffe6e6;
       font-family: Arial, sans-serif;
       overflow-x: hidden;
@@ -30,14 +30,27 @@
       word-wrap: break-word;
     }
 
+    /* Animazione per il titolo */
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-title {
+      animation: slideIn 0.5s ease forwards;
+    }
+
     /* Contenitore della prima GIF */
     #gif-container {
       width: 450px !important;
       height: 450px !important;
       margin-bottom: 30px;
     }
-
-    /* Forza eventuali iframe o immagini all'interno del container a occupare tutto lo spazio */
     #gif-container iframe,
     #gif-container img {
       width: 100% !important;
@@ -51,7 +64,6 @@
       justify-content: center;
       margin-top: -10px;
     }
-
     .button {
       font-family: 'Pacifico', cursive;
       padding: 25px 50px;
@@ -61,16 +73,13 @@
       cursor: pointer;
       transition: transform 0.2s ease;
     }
-
     .button:hover {
       transform: scale(1.1);
     }
-
     .yes {
       background-color: #66ff66;
       color: #fff;
     }
-
     .no {
       background-color: #ff6666;
       color: #fff;
@@ -102,7 +111,8 @@
   <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
   
   <div class="button-container">
-    <button class="button yes">Sì</button>
+    <!-- Sostituito "Sì" con "Szi <3" -->
+    <button class="button yes">Szi <3</button>
     <button class="button no">No</button>
   </div>
 
@@ -115,16 +125,36 @@
 
     let yesScale = 1;
     let noScale = 1;
+    let noPressCount = 0;  // Contatore per i click sul tasto "No"
 
-    // Azione per il tasto "Sì"
+    noButton.addEventListener('click', () => {
+      noPressCount++;
+      // Aggiorna il testo del tasto "No" secondo la sequenza
+      if (noPressCount === 1) {
+        noButton.innerText = "Per favore!!";
+      } else if (noPressCount === 2) {
+        noButton.innerText = "Ti prego";
+      } else if (noPressCount === 3) {
+        noButton.innerText = "Ti supplico ti amo sei l'amore mio";
+      } else if (noPressCount >= 4) {
+        noButton.innerText = "Atroce";
+      }
+      // Aggiorna la scala dei bottoni con fattore 1.3x
+      noScale *= (1 / 1.3); // il tasto "No" si riduce
+      noButton.style.transform = `scale(${noScale})`;
+      yesScale *= 1.3;      // il tasto "Szi <3" si ingrandisce
+      yesButton.style.transform = `scale(${yesScale})`;
+    });
+
     yesButton.addEventListener('click', () => {
-      // Aggiorna il titolo, riducendone la dimensione per evitare scroll orizzontale
-      h1.textContent = 'YIIIPPIIIEEEEE!!!';
-      h1.style.fontSize = '3rem';
-      h1.style.whiteSpace = 'nowrap';
-      h1.style.overflow = 'hidden';
-      
-      // Sostituisce la prima GIF con la seconda, centrata e più piccola
+      // Aggiorna il titolo in "YIIPPIIEEE!!", riducendone la dimensione e forzandolo in una singola riga
+      h1.textContent = "YIIPPIIEEE!!";
+      h1.style.fontSize = "3rem";
+      h1.style.whiteSpace = "nowrap";
+      h1.style.overflow = "hidden";
+      h1.classList.add("animate-title");
+
+      // Sostituisce la prima GIF con la seconda (embed centrato, data-width="70%")
       gifContainer.innerHTML = `
         <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
           <div class="tenor-gif-embed" data-postid="3971686153073610452" data-share-method="host" data-aspect-ratio="1" data-width="70%">
@@ -141,19 +171,21 @@
       newScript.async = true;
       newScript.src = 'https://tenor.com/embed.js';
       gifContainer.appendChild(newScript);
-      
-      // Resetta le trasformazioni dei bottoni per evitare artifact e rimuove il container dei bottoni
-      yesButton.style.transform = 'scale(1)';
-      noButton.style.transform = 'scale(1)';
-      buttonContainer.innerHTML = '';
-    });
 
-    // Azione per il tasto "No": scalatura 1.5x
-    noButton.addEventListener('click', () => {
-      noScale *= (1 / 1.5);  // Il tasto "No" diventa 1.5 volte più piccolo
-      noButton.style.transform = `scale(${noScale})`;
-      yesScale *= 1.5;       // Il tasto "Sì" diventa 1.5 volte più grande
-      yesButton.style.transform = `scale(${yesScale})`;
+      // Aggiunge sotto la seconda GIF il testo "Ti Amo <3" in grande,
+      // in modo da non avere scroll orizzontale e il testo in una sola riga
+      const loveText = document.createElement('div');
+      loveText.innerText = "Ti Amo <3";
+      loveText.style.fontSize = "8vw";
+      loveText.style.whiteSpace = "nowrap";
+      loveText.style.textAlign = "center";
+      loveText.style.marginTop = "10px";
+      gifContainer.appendChild(loveText);
+
+      // Resetta le trasformazioni e rimuove i bottoni per evitare artifact
+      yesButton.style.transform = "scale(1)";
+      noButton.style.transform = "scale(1)";
+      buttonContainer.innerHTML = "";
     });
   </script>
 </body>
