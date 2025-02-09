@@ -85,13 +85,13 @@
     }
     /* Contenitore per la gif dei baci (ridotto a 400px) */
     #gif-container1 {
-      width: 400px !important;
-      height: 200px !important;
+      width: 50px !important;
+      height: 50px !important;
       margin-bottom: 0;
     }
     #gif-container1 img {
       width: 100% !important;
-      height: 100% !important;
+      height: 80% !important;
       object-fit: cover;
       display: block;
       margin: 0;
@@ -99,13 +99,13 @@
     }
     /* Contenitore per la gif yippie */
     #gif-container2 {
-      width: 400px !important;
-      height: 400px !important;
+      width: 50px !important;
+      height: 50px !important;
       margin-bottom: 30px;
     }
     #gif-container2 img {
       width: 100% !important;
-      height: 100% !important;
+      height: 80% !important;
       object-fit: cover;
     }
     /* I pulsanti sono ora impilati verticalmente */
@@ -158,7 +158,7 @@
 
   <!-- Landing Page -->
   <div id="landing-page">
-    <h1>Ciao Amore!!</h1>
+    <h1>Ciao Amore!!1</h1>
     <button id="landing-btn" class="button">Ciao patators!!</button>
   </div>
 
@@ -214,9 +214,9 @@
     noButton.addEventListener('click', () => {
       noPressCount++;
       if (noPressCount === 1) {
-        noButton.innerText = "Ti prego";
-      } else if (noPressCount === 2) {
         noButton.innerText = "Per favore🥺";
+      } else if (noPressCount === 2) {
+        noButton.innerText = "Ti prego";
       } else if (noPressCount === 3) {
         noButton.innerText = "Ti supplico amore";
       } else if (noPressCount === 4) {
