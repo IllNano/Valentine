@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Richiesta x la mia nicaredda</title>
+  <title>Valentine Proposal</title>
   <style>
     /* Definizione del font personalizzato: cuori2.ttf */
     @font-face {
@@ -12,7 +12,6 @@
       font-weight: normal;
       font-style: normal;
     }
-
     body {
       display: flex;
       flex-direction: column;
@@ -26,7 +25,6 @@
       font-family: 'cuori2', Arial, sans-serif;
       overflow-x: hidden;
     }
-
     h1 {
       font-family: 'cuori2', Arial, sans-serif;
       font-size: 4.5rem;
@@ -36,7 +34,6 @@
       max-width: 90vw;
       word-wrap: break-word;
     }
-
     /* Stili per la landing page */
     #landing-page {
       display: flex;
@@ -62,8 +59,7 @@
     #landing-btn:hover {
       transform: scale(1.1);
     }
-
-    /* I pulsanti nella main page useranno colori specifici */
+    /* Pulsanti nella main page */
     .button {
       font-family: 'cuori2', Arial, sans-serif;
       padding: 25px 50px;
@@ -75,7 +71,7 @@
       transform-origin: center;
       flex-shrink: 0;
     }
-    /* Colori per i tasti della main page */
+    /* Colori per i pulsanti della main page */
     #yes-btn {
       background-color: #f06b74; /* leggermente più chiaro */
       color: #fff;
@@ -87,13 +83,11 @@
     .button:hover {
       transform: scale(1.1);
     }
-
-    /* Stili per la parte principale */
-    /* Contenitore per la gif dei baci */
+    /* Contenitore per la gif dei baci (ridotto a 400px) */
     #gif-container1 {
-      width: 450px !important;
-      height: 450px !important;
-      margin-bottom: 0;  /* spazio ridotto */
+      width: 400px !important;
+      height: 400px !important;
+      margin-bottom: 0;
     }
     #gif-container1 img {
       width: 100% !important;
@@ -103,11 +97,10 @@
       margin: 0;
       padding: 0;
     }
-
     /* Contenitore per la gif yippie */
     #gif-container2 {
-      width: 450px !important;
-      height: 450px !important;
+      width: 400px !important;
+      height: 400px !important;
       margin-bottom: 30px;
     }
     #gif-container2 img {
@@ -115,15 +108,15 @@
       height: 100% !important;
       object-fit: cover;
     }
-
+    /* I pulsanti sono ora impilati verticalmente */
     .button-container {
       display: flex;
-      gap: 20px;
+      flex-direction: column;
+      gap: 10px;
       justify-content: center;
-      margin-top: 10px; /* ridotto spazio tra gif e pulsanti */
+      margin-top: 10px; /* spazio ridotto tra gif e pulsanti */
       position: relative;
     }
-
     @keyframes slideIn {
       from {
         opacity: 0;
@@ -137,7 +130,6 @@
     .animate-title {
       animation: slideIn 0.5s ease forwards;
     }
-
     @media (max-width: 600px) {
       #gif-container1, #gif-container2 {
         width: 80vw !important;
@@ -167,12 +159,12 @@
   <!-- Landing Page -->
   <div id="landing-page">
     <h1>Ciao Amore!!</h1>
-    <button class="button" id="landing-btn">Ciao patators!!</button>
+    <button id="landing-btn" class="button">Ciao patators!!</button>
   </div>
 
   <!-- Main Page (nascosta inizialmente) -->
   <div id="main-page" style="display:none;">
-    <h1>Richiesta x la mia nicaredda</h1>
+    <h1>Will you be my Valentine?💚</h1>
     <!-- Contenitore per la gif dei baci: inizialmente mostra baci1.gif -->
     <div id="gif-container1">
       <img id="first-gif" src="baci1.gif" alt="Baci GIF">
@@ -181,8 +173,8 @@
     <div id="gif-container2"></div>
     
     <div class="button-container" id="button-container">
-      <button class="button" id="yes-btn">Szi💚</button>
-      <button class="button" id="no-btn">Mi uncia</button>
+      <button id="yes-btn" class="button">Szi💚</button>
+      <button id="no-btn" class="button">Mi uncia</button>
     </div>
   </div>
 
@@ -194,13 +186,11 @@
     const initialMusic = document.getElementById('bg-music-initial');
 
     landingBtn.addEventListener('click', () => {
-      // Avvia la musica iniziale se non è già in riproduzione
       if (initialMusic.paused) {
         initialMusic.play().catch((error) =>
           console.log("Errore nella riproduzione di forever.mp3:", error)
         );
       }
-      // Nascondi la landing page e mostra la parte principale
       landingPage.style.display = 'none';
       mainPage.style.display = 'block';
     });
@@ -208,23 +198,21 @@
     // Gestione della pagina principale
     const yesButton = document.getElementById('yes-btn');
     const noButton = document.getElementById('no-btn');
-    const mainTitle = mainPage.querySelector('h1'); // Il titolo principale
+    const mainTitle = mainPage.querySelector('h1'); // Titolo principale
     const gifContainer1 = document.getElementById('gif-container1'); // Contenitore per i baci
-    const firstGifImg = document.getElementById('first-gif');   // L'immagine nel contenitore dei baci
-    const gifContainer2 = document.getElementById('gif-container2'); // Contenitore per la gif yippie
+    const firstGifImg = document.getElementById('first-gif');   // L'immagine dei baci
+    const gifContainer2 = document.getElementById('gif-container2'); // Contenitore per yippie
     const buttonContainer = document.getElementById('button-container');
     const yesMusic = document.getElementById('bg-music-yes');
 
     let yesScale = 1;
     let noScale = 1;
     let noPressCount = 0;
-
-    // Array delle gif per i baci
+    // Array delle gif per i baci: l'indice 0 è baci1.gif (già visualizzata)
     const baciGifs = ["baci1.gif", "baci2.gif", "baci3.gif", "baci4.gif"];
 
     noButton.addEventListener('click', () => {
       noPressCount++;
-
       if (noPressCount === 1) {
         noButton.innerText = "Ti prego";
       } else if (noPressCount === 2) {
@@ -240,24 +228,28 @@
       } else if (noPressCount >= 7) {
         noButton.innerText = "Subita Max";
       }
-
       // Aggiorna la scala dei bottoni
       noScale *= (1 / 1.3);
       noButton.style.transform = `scale(${noScale})`;
       yesScale *= 1.3;
       yesButton.style.transform = `scale(${yesScale})`;
-
-      // Se noPressCount è minore o uguale a 4, cambia la gif seguendo l'ordine; 
-      // altrimenti, rimane su baci4.gif.
-      if (noPressCount <= 4) {
-        firstGifImg.src = baciGifs[noPressCount];
+      // Se noPressCount è minore o uguale a 3, cambia la gif; da 4 in poi, rimane su baci4.gif.
+      if (noPressCount <= 3) {
+        if (noPressCount === 3) {
+          // Forza un refresh per evitare il bug al terzo click
+          firstGifImg.src = "";
+          setTimeout(() => {
+            firstGifImg.src = baciGifs[3];
+          }, 100);
+        } else {
+          firstGifImg.src = baciGifs[noPressCount];
+        }
       } else {
-        firstGifImg.src = baciGifs[baciGifs.length - 1];
+        firstGifImg.src = baciGifs[3];
       }
     });
 
     yesButton.addEventListener('click', () => {
-      // Cambio musica: ferma la musica iniziale e avvia quella del "Szi"
       if (initialMusic) {
         initialMusic.pause();
       }
@@ -265,23 +257,19 @@
         yesMusic.currentTime = 0;
         yesMusic.play().then(() => {
           console.log("yippie.mp3 sta suonando.");
-        }).catch((error) =>
-          console.log("Errore nella riproduzione di yippie.mp3:", error)
-        );
+        }).catch((error) => {
+          console.log("Errore nella riproduzione di yippie.mp3:", error);
+        });
       }
-
       mainTitle.textContent = "YIPPIIEEE!";
       mainTitle.style.fontSize = "3rem";
       mainTitle.style.whiteSpace = "nowrap";
       mainTitle.style.overflow = "hidden";
       mainTitle.classList.add("animate-title");
-
       // Nascondi la gif dei baci
       gifContainer1.style.display = 'none';
-
       // Mostra la gif yippie nel secondo contenitore
       gifContainer2.innerHTML = `<img src="yippie.gif" alt="Yippie GIF">`;
-
       // Aggiungi il testo "Ti Amo" sotto la gif yippie
       const loveText = document.createElement('div');
       loveText.innerText = "Ti Amo💚💚💚";
@@ -292,7 +280,6 @@
       loveText.style.fontFamily = "'cuori2', Arial, sans-serif";
       loveText.style.color = "#ff4d4d";
       gifContainer2.appendChild(loveText);
-
       yesButton.style.transform = "scale(1)";
       noButton.style.transform = "scale(1)";
       buttonContainer.innerHTML = "";
