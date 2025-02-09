@@ -74,7 +74,6 @@
       border-radius: 8px;
       cursor: pointer;
       transition: transform 0.2s ease;
-      /* Impedisce lo spostamento laterale durante il ridimensionamento */
       transform-origin: center;
       flex-shrink: 0;
     }
@@ -112,6 +111,19 @@
 </head>
 <body>
   <h1>Will you be my Valentine?</h1>
+
+  <!-- Audio per la musica di sottofondo iniziale -->
+  <audio id="bg-music-initial" loop autoplay style="display: none;">
+    <source src="forever.mp3" type="audio/mpeg">
+    Il tuo browser non supporta l'elemento audio.
+  </audio>
+
+  <!-- Audio per la musica che parte quando premi "Szi" -->
+  <audio id="bg-music-yes" loop style="display: none;">
+    <source src="yippie.mp3" type="audio/mpeg">
+    Il tuo browser non supporta l'elemento audio.
+  </audio>
+
   <div id="gif-container" class="tenor-gif-embed" 
        data-postid="16191851" data-share-method="host" data-aspect-ratio="1" data-width="100%">
     <a href="https://tenor.com/view/love-loving-hold-hands-rub-face-gif-16191851">Love Loving Sticker</a>
@@ -130,6 +142,10 @@
     const gifContainer = document.getElementById('gif-container');
     const h1 = document.querySelector('h1');
     const buttonContainer = document.getElementById('button-container');
+
+    // Elementi audio
+    const initialMusic = document.getElementById('bg-music-initial');
+    const yesMusic = document.getElementById('bg-music-yes');
 
     let yesScale = 1;
     let noScale = 1;
@@ -161,6 +177,15 @@
     });
 
     yesButton.addEventListener('click', () => {
+      // Ferma la musica iniziale e avvia quella del "Szi"
+      if (initialMusic) {
+        initialMusic.pause();
+      }
+      if (yesMusic) {
+        yesMusic.currentTime = 0;
+        yesMusic.play();
+      }
+
       h1.textContent = "YIPPIIEEE!";
       h1.style.fontSize = "3rem";
       h1.style.whiteSpace = "nowrap";
