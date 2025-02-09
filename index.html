@@ -105,10 +105,6 @@
         font-size: 1.75rem;
       }
     }
-
-    #background-audio {
-      display: none;
-    }
   </style>
 </head>
 <body>
@@ -119,12 +115,6 @@
     from <a href="https://tenor.com/search/love-stickers">Love Stickers</a>
   </div>
   <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-
-  <!-- Audio di sottofondo -->
-  <audio id="background-audio" autoplay loop>
-    <source src="https://www.youtube.com/embed/gVS_ZLBPEck?autoplay=1" type="audio/mpeg">
-    Il tuo browser non supporta l'elemento audio.
-  </audio>
 
   <div class="button-container" id="button-container">
     <button class="button yes" id="yes-btn">Szi <3</button>
@@ -142,7 +132,6 @@
     let noScale = 1;
     let noPressCount = 0;
     let initialPositionsSet = false;
-    let initialNoLeft, initialNoTop;
 
     noButton.addEventListener('click', () => {
       noPressCount++;
@@ -161,18 +150,6 @@
         noButton.innerText = "Subita";
       } else if (noPressCount >= 7) {
         noButton.innerText = "Subita Max";
-      }
-
-      if (!initialPositionsSet) {
-        initialNoLeft = noButton.offsetLeft;
-        initialNoTop = noButton.offsetTop;
-        yesButton.style.position = "absolute";
-        noButton.style.position = "absolute";
-        yesButton.style.left = `${initialNoLeft}px`;
-        yesButton.style.top = `${initialNoTop}px`;
-        noButton.style.left = `${initialNoLeft}px`;
-        noButton.style.top = `${initialNoTop}px`;
-        initialPositionsSet = true;
       }
 
       noScale *= (1 / 1.3);
