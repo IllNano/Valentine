@@ -65,13 +65,9 @@
       transform: scale(1.1);
     }
 
-    .yes {
-      background-color: #66ff66;
-      color: #fff;
-    }
-
-    .no {
-      background-color: #ff6666;
+    /* Colore dei tasti aggiornato a #e3445c */
+    .yes, .no {
+      background-color: #e3445c;
       color: #fff;
     }
 
@@ -80,12 +76,15 @@
     #gif-container1 {
       width: 450px !important;
       height: 450px !important;
-      margin-bottom: 10px;  /* Spazio ridotto rispetto a prima */
+      margin-bottom: 0;  /* Eliminato lo spazio extra */
     }
     #gif-container1 img {
       width: 100% !important;
       height: 100% !important;
       object-fit: cover;
+      display: block;
+      margin: 0;
+      padding: 0;
     }
 
     /* Contenitore per la seconda gif (yippie) */
@@ -104,7 +103,7 @@
       display: flex;
       gap: 20px;
       justify-content: center;
-      margin-top: -10px;
+      margin-top: 0; /* Ridotto lo spazio sopra i pulsanti */
       position: relative;
     }
 
@@ -232,12 +231,12 @@
       yesScale *= 1.3;
       yesButton.style.transform = `scale(${yesScale})`;
 
-      // Se noPressCount è inferiore alla lunghezza dell'array, usa quell'indice;
+      // Se noPressCount è minore o uguale a 4, cambia la gif seguendo l'ordine; 
       // altrimenti, rimane su baci4.gif.
-      if (noPressCount < baciGifs.length) {
-        firstGifImg.src = baciGifs[noPressCount];
+      if (noPressCount <= 4) {
+        firstGifImg.src = baciGifs[noPressCount - 1];
       } else {
-        firstGifImg.src = baciGifs[baciGifs.length - 1];
+        firstGifImg.src = baciGifs[3];
       }
     });
 
