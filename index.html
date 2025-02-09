@@ -22,22 +22,22 @@
 
     h1 {
       font-family: 'Pacifico', cursive;
-      font-size: 4.5rem; /* Titolo iniziale grande */
+      font-size: 4.5rem;
       color: #ff4d4d;
-      margin: 10px 0 30px; /* Poco spazio sopra e 30px sotto */
+      margin: 10px 0 30px;
       text-align: center;
       max-width: 90vw;
       word-wrap: break-word;
     }
 
-    /* Contenitore della prima gif */
+    /* Contenitore della prima GIF */
     #gif-container {
       width: 450px !important;
       height: 450px !important;
       margin-bottom: 30px;
     }
 
-    /* Forziamo eventuali iframe o immagini all'interno del container a occupare tutto lo spazio */
+    /* Forza eventuali iframe o immagini all'interno del container a occupare tutto lo spazio */
     #gif-container iframe,
     #gif-container img {
       width: 100% !important;
@@ -98,7 +98,7 @@
     <a href="https://tenor.com/view/love-loving-hold-hands-rub-face-gif-16191851">Love Loving Sticker</a>
     from <a href="https://tenor.com/search/love-stickers">Love Stickers</a>
   </div>
-  <!-- Script per l'embedding iniziale della gif -->
+  <!-- Script per l'embedding iniziale della GIF -->
   <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
   
   <div class="button-container">
@@ -118,14 +118,15 @@
 
     // Azione per il tasto "Sì"
     yesButton.addEventListener('click', () => {
-      // Cambia il testo del titolo, riduce la dimensione del font e forza il testo a stare in una riga
+      // Aggiorna il titolo, riducendone la dimensione per evitare scroll orizzontale
       h1.textContent = 'YIIIPPIIIEEEEE!!!';
-      h1.style.fontSize = '3.5rem';
+      h1.style.fontSize = '3rem';
       h1.style.whiteSpace = 'nowrap';
-
-      // Sostituisce la gif con la seconda, centrata e un po' più piccola
+      h1.style.overflow = 'hidden';
+      
+      // Sostituisce la prima GIF con la seconda, centrata e più piccola
       gifContainer.innerHTML = `
-        <div style="margin: 0 auto; width: 100%; height: 100%;">
+        <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
           <div class="tenor-gif-embed" data-postid="3971686153073610452" data-share-method="host" data-aspect-ratio="1" data-width="70%">
             <a href="https://tenor.com/view/cat-jump-happy-happy-happy-gif-3971686153073610452">
               Cat Jump Sticker
@@ -134,25 +135,24 @@
           </div>
         </div>
       `;
-      // Crea e aggiunge dinamicamente il tag <script> per re-inizializzare l'embed di Tenor
+      // Re-inizializza l'embed di Tenor per la seconda GIF
       const newScript = document.createElement('script');
       newScript.type = 'text/javascript';
       newScript.async = true;
       newScript.src = 'https://tenor.com/embed.js';
       gifContainer.appendChild(newScript);
-
-      // Resetta le trasformazioni dei bottoni per evitare artifact
+      
+      // Resetta le trasformazioni dei bottoni per evitare artifact e rimuove il container dei bottoni
       yesButton.style.transform = 'scale(1)';
       noButton.style.transform = 'scale(1)';
-      // Rimuove i bottoni per evitare residui
       buttonContainer.innerHTML = '';
     });
 
-    // Azione per il tasto "No": effetto doppio
+    // Azione per il tasto "No": scalatura 1.5x
     noButton.addEventListener('click', () => {
-      noScale *= 0.5; // Il tasto No diventa il doppio più piccolo
+      noScale *= (1 / 1.5);  // Il tasto "No" diventa 1.5 volte più piccolo
       noButton.style.transform = `scale(${noScale})`;
-      yesScale *= 2;  // Il tasto Sì diventa il doppio più grande
+      yesScale *= 1.5;       // Il tasto "Sì" diventa 1.5 volte più grande
       yesButton.style.transform = `scale(${yesScale})`;
     });
   </script>
