@@ -17,12 +17,12 @@
       padding: 10px;
       background-color: #ffe6e6;
       font-family: Arial, sans-serif;
-      overflow-x: hidden; /* Evita lo scroll orizzontale */
+      overflow-x: hidden; /* Evita scroll orizzontale */
     }
 
     h1 {
       font-family: 'Pacifico', cursive;
-      font-size: 3rem;
+      font-size: 4.5rem; /* Titolo più grande */
       color: #ff4d4d;
       margin-bottom: 30px;
       text-align: center;
@@ -30,15 +30,14 @@
       word-wrap: break-word;
     }
 
-    /* Forziamo il contenitore della gif a essere quadrato,
-       sovrascrivendo eventuali stili inline con !important */
+    /* Contenitore della gif: dimensioni leggermente ridotte e forzate a quadrato */
     #gif-container {
-      width: 500px !important;
-      height: 500px !important;
-      margin-bottom: 50px;
+      width: 450px !important;
+      height: 450px !important;
+      margin-bottom: 30px; /* Meno spazio in basso per spostare i bottoni in alto */
     }
 
-    /* Se l’embed inserisce un iframe o un’immagine, forziamo le dimensioni */
+    /* Forza la gif (iframe o img) a occupare tutto il contenitore */
     #gif-container iframe,
     #gif-container img {
       width: 100% !important;
@@ -46,16 +45,19 @@
       object-fit: cover;
     }
 
+    /* Bottoni allineati orizzontalmente, spostati leggermente in alto */
     .button-container {
       display: flex;
       gap: 20px;
       justify-content: center;
+      margin-top: -10px;
     }
 
+    /* Bottoni più grandi */
     .button {
       font-family: 'Pacifico', cursive;
-      padding: 20px 40px;
-      font-size: 1.75rem;
+      padding: 25px 50px;
+      font-size: 2rem;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -76,30 +78,25 @@
       color: #fff;
     }
 
-    /* Adattamento per dispositivi mobili */
+    /* Adattamenti per dispositivi mobili */
     @media (max-width: 600px) {
       #gif-container {
-        width: 90vw !important;
-        height: 90vw !important;
+        width: 80vw !important;
+        height: 80vw !important;
       }
       h1 {
-        font-size: 2rem;
+        font-size: 3rem;
         max-width: 90vw;
       }
       .button {
-        padding: 10px 20px;
-        font-size: 1.5rem;
+        padding: 20px 30px;
+        font-size: 1.75rem;
       }
     }
   </style>
 </head>
 <body>
   <h1>Will you be my Valentine?</h1>
-  <!-- 
-       Modifichiamo anche gli attributi di embed:
-       - data-aspect-ratio è impostato a "1" per forzare un rapporto quadrato;
-       - data-width è impostato a "100%" in modo da usare l'intera larghezza del contenitore.
-  -->
   <div id="gif-container" class="tenor-gif-embed" data-postid="16191851" data-share-method="host" data-aspect-ratio="1" data-width="100%">
     <a href="https://tenor.com/view/love-loving-hold-hands-rub-face-gif-16191851">Love Loving Sticker</a>
     from <a href="https://tenor.com/search/love-stickers">Love Stickers</a>
@@ -133,13 +130,11 @@
           from <a href="https://tenor.com/search/cat+jump-stickers">Cat Jump Stickers</a>
         </div>
       `;
-      // Creiamo dinamicamente il tag <script> per re-inizializzare l'embed di Tenor
       const newScript = document.createElement('script');
       newScript.type = 'text/javascript';
       newScript.async = true;
       newScript.src = 'https://tenor.com/embed.js';
       gifContainer.appendChild(newScript);
-      // Nascondiamo i bottoni
       buttonContainer.style.display = 'none';
     });
 
