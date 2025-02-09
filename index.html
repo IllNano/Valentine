@@ -58,6 +58,7 @@
       object-fit: cover;
     }
 
+    /* Contenitore dei bottoni: inizialmente in flex */
     .button-container {
       display: flex;
       gap: 20px;
@@ -103,29 +104,30 @@
 </head>
 <body>
   <h1>Will you be my Valentine?</h1>
-  <div id="gif-container" class="tenor-gif-embed" data-postid="16191851" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+  <div id="gif-container" class="tenor-gif-embed" 
+       data-postid="16191851" data-share-method="host" data-aspect-ratio="1" data-width="100%">
     <a href="https://tenor.com/view/love-loving-hold-hands-rub-face-gif-16191851">Love Loving Sticker</a>
     from <a href="https://tenor.com/search/love-stickers">Love Stickers</a>
   </div>
   <!-- Script per l'embedding iniziale della GIF -->
   <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
   
-  <div class="button-container">
+  <div class="button-container" id="button-container">
     <!-- Sostituito "Sì" con "Szi <3" -->
-    <button class="button yes">Szi <3</button>
-    <button class="button no">No</button>
+    <button class="button yes" id="yes-btn">Szi <3</button>
+    <button class="button no" id="no-btn">No</button>
   </div>
 
   <script>
-    const yesButton = document.querySelector('.yes');
-    const noButton = document.querySelector('.no');
-    const gifContainer = document.querySelector('#gif-container');
+    const yesButton = document.getElementById('yes-btn');
+    const noButton = document.getElementById('no-btn');
+    const gifContainer = document.getElementById('gif-container');
     const h1 = document.querySelector('h1');
-    const buttonContainer = document.querySelector('.button-container');
+    const buttonContainer = document.getElementById('button-container');
 
     let yesScale = 1;
     let noScale = 1;
-    let noPressCount = 0;  // Contatore per i click sul tasto "No"
+    let noPressCount = 0;
 
     noButton.addEventListener('click', () => {
       noPressCount++;
@@ -139,16 +141,36 @@
       } else if (noPressCount >= 4) {
         noButton.innerText = "Atroce";
       }
-      // Aggiorna la scala dei bottoni con fattore 1.3x
-      noScale *= (1 / 1.3); // il tasto "No" si riduce
+
+      // Imposta il container dei bottoni in modalità "overlap"
+      if (yesButton.style.position !== "absolute") {
+        // Converti il layout in posizione assoluta
+        buttonContainer.style.position = "relative";
+        const containerRect = buttonContainer.getBoundingClientRect();
+        const noRect = noButton.getBoundingClientRect();
+        const offsetLeft = noRect.left - containerRect.left;
+        const offsetTop = noRect.top - containerRect.top;
+        yesButton.style.position = "absolute";
+        noButton.style.position = "absolute";
+        yesButton.style.left = offsetLeft + "px";
+        yesButton.style.top = offsetTop + "px";
+        noButton.style.left = offsetLeft + "px";
+        noButton.style.top = offsetTop + "px";
+        // Imposta il tasto "No" su un piano superiore
+        noButton.style.zIndex = 2;
+        yesButton.style.zIndex = 1;
+      }
+
+      // Varia la scala dei bottoni (fattore 1.3x)
+      noScale *= (1 / 1.3); // il tasto "No" diventa 1.3 volte più piccolo
       noButton.style.transform = `scale(${noScale})`;
-      yesScale *= 1.3;      // il tasto "Szi <3" si ingrandisce
+      yesScale *= 1.3;      // il tasto "Szi <3" diventa 1.3 volte più grande
       yesButton.style.transform = `scale(${yesScale})`;
     });
 
     yesButton.addEventListener('click', () => {
-      // Aggiorna il titolo in "YIIPPIIEEE!!", riducendone la dimensione e forzandolo in una singola riga
-      h1.textContent = "YIIPPIIEEE!!";
+      // Aggiorna il titolo in "YIPPIIEEE!" (con font-size ridotto e senza andare a capo)
+      h1.textContent = "YIPPIIEEE!";
       h1.style.fontSize = "3rem";
       h1.style.whiteSpace = "nowrap";
       h1.style.overflow = "hidden";
@@ -172,17 +194,18 @@
       newScript.src = 'https://tenor.com/embed.js';
       gifContainer.appendChild(newScript);
 
-      // Aggiunge sotto la seconda GIF il testo "Ti Amo <3" in grande,
-      // in modo da non avere scroll orizzontale e il testo in una sola riga
+      // Aggiunge sotto la seconda GIF il testo "Ti Amo <3"
       const loveText = document.createElement('div');
       loveText.innerText = "Ti Amo <3";
       loveText.style.fontSize = "8vw";
       loveText.style.whiteSpace = "nowrap";
       loveText.style.textAlign = "center";
       loveText.style.marginTop = "10px";
+      // Applica il font "Pacifico" anche a questo testo
+      loveText.style.fontFamily = "'Pacifico', cursive";
       gifContainer.appendChild(loveText);
 
-      // Resetta le trasformazioni e rimuove i bottoni per evitare artifact
+      // Resetta le trasformazioni e rimuove il container dei bottoni per evitare artifact
       yesButton.style.transform = "scale(1)";
       noButton.style.transform = "scale(1)";
       buttonContainer.innerHTML = "";
