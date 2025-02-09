@@ -113,13 +113,13 @@
   <h1>Will you be my Valentine?</h1>
 
   <!-- Audio per la musica iniziale (forever.mp3) -->
-  <audio id="bg-music-initial" loop style="display: none;">
+  <audio id="bg-music-initial" loop style="width:0; height:0; opacity:0; position:absolute;">
     <source src="forever.mp3" type="audio/mpeg">
     Il tuo browser non supporta l'elemento audio.
   </audio>
 
   <!-- Audio per la musica che parte quando si preme "Szi" (yippie.mp3) -->
-  <audio id="bg-music-yes" loop style="display: none;">
+  <audio id="bg-music-yes" loop style="width:0; height:0; opacity:0; position:absolute;">
     <source src="yippie.mp3" type="audio/mpeg">
     Il tuo browser non supporta l'elemento audio.
   </audio>
@@ -154,10 +154,11 @@
     noButton.addEventListener('click', () => {
       noPressCount++;
 
-      // Al primo click sul pulsante "Mi uncia", se la musica iniziale non sta già suonando, la avvio
+      // Al primo click su "Mi uncia", avvio la musica iniziale
       if (noPressCount === 1) {
         if (initialMusic.paused) {
-          initialMusic.play().catch((error) => console.log("Errore durante la riproduzione della musica iniziale:", error));
+          console.log("Tasto 'Mi uncia' premuto: avvio musica iniziale.");
+          initialMusic.play().catch((error) => console.log("Errore nella riproduzione di forever.mp3:", error));
         }
         noButton.innerText = "Ti prego";
       } else if (noPressCount === 2) {
@@ -181,13 +182,16 @@
     });
 
     yesButton.addEventListener('click', () => {
+      console.log("Tasto 'Szi' premuto: cambio musica.");
       // Ferma la musica iniziale e avvia quella del "Szi"
       if (initialMusic) {
         initialMusic.pause();
       }
       if (yesMusic) {
         yesMusic.currentTime = 0;
-        yesMusic.play().catch((error) => console.log("Errore durante la riproduzione della musica per Szi:", error));
+        yesMusic.play().then(() => {
+          console.log("yippie.mp3 sta suonando.");
+        }).catch((error) => console.log("Errore nella riproduzione di yippie.mp3:", error));
       }
 
       h1.textContent = "YIPPIIEEE!";
