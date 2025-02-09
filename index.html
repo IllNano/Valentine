@@ -80,7 +80,7 @@
     #gif-container1 {
       width: 450px !important;
       height: 450px !important;
-      margin-bottom: 30px;
+      margin-bottom: 10px;  /* Spazio ridotto rispetto a prima */
     }
     #gif-container1 img {
       width: 100% !important;
@@ -232,11 +232,12 @@
       yesScale *= 1.3;
       yesButton.style.transform = `scale(${yesScale})`;
 
-      // Aggiorna la prima gif: se noPressCount <= 4, cambia nell'ordine; altrimenti resta su baci4.gif.
-      if (noPressCount <= 4) {
-        firstGifImg.src = baciGifs[noPressCount - 1];
+      // Se noPressCount è inferiore alla lunghezza dell'array, usa quell'indice;
+      // altrimenti, rimane su baci4.gif.
+      if (noPressCount < baciGifs.length) {
+        firstGifImg.src = baciGifs[noPressCount];
       } else {
-        firstGifImg.src = baciGifs[3];
+        firstGifImg.src = baciGifs[baciGifs.length - 1];
       }
     });
 
