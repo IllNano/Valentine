@@ -132,15 +132,19 @@
 
       // Imposta i testi progressivi del bottone "No"
       if (noPressCount === 1) {
-        noButton.innerText = "Per favore!!";
-      } else if (noPressCount === 2) {
         noButton.innerText = "Ti prego";
+      } else if (noPressCount === 2) {
+        noButton.innerText = "Per favore :(";
       } else if (noPressCount === 3) {
-        noButton.innerText = "Ti supplico ti amo sei l'amore mio";
+        noButton.innerText = "Ti supplico amore";
       } else if (noPressCount === 4) {
+        noButton.innerText = "E come dobbiamo fare?";
+      } else if (noPressCount === 5) {
         noButton.innerText = "Atroce";
-      } else if (noPressCount >= 5) {
+      } else if (noPressCount === 6) {
         noButton.innerText = "Subita";
+      } else if (noPressCount >= 7) {
+        noButton.innerText = "Subita Max";
       }
 
       // Scala i bottoni
