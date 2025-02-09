@@ -22,22 +22,22 @@
 
     h1 {
       font-family: 'Pacifico', cursive;
-      font-size: 4.5rem; /* Titolo grande su desktop */
+      font-size: 4.5rem; /* Titolo iniziale grande */
       color: #ff4d4d;
-      margin: 10px 0 30px; /* Poco spazio sopra, 30px sotto */
+      margin: 10px 0 30px; /* Poco spazio sopra e 30px sotto */
       text-align: center;
       max-width: 90vw;
       word-wrap: break-word;
     }
 
-    /* Contenitore della gif (primo embed) */
+    /* Contenitore della prima gif */
     #gif-container {
       width: 450px !important;
       height: 450px !important;
       margin-bottom: 30px;
     }
 
-    /* Forza eventuali elementi (iframe o img) a occupare tutto il contenitore */
+    /* Forziamo eventuali iframe o immagini all'interno del container a occupare tutto lo spazio */
     #gif-container iframe,
     #gif-container img {
       width: 100% !important;
@@ -45,7 +45,6 @@
       object-fit: cover;
     }
 
-    /* Bottoni allineati orizzontalmente e spostati un po' più in alto */
     .button-container {
       display: flex;
       gap: 20px;
@@ -53,7 +52,6 @@
       margin-top: -10px;
     }
 
-    /* Bottoni più grandi */
     .button {
       font-family: 'Pacifico', cursive;
       padding: 25px 50px;
@@ -120,33 +118,41 @@
 
     // Azione per il tasto "Sì"
     yesButton.addEventListener('click', () => {
+      // Cambia il testo del titolo, riduce la dimensione del font e forza il testo a stare in una riga
       h1.textContent = 'YIIIPPIIIEEEEE!!!';
+      h1.style.fontSize = '3.5rem';
+      h1.style.whiteSpace = 'nowrap';
+
+      // Sostituisce la gif con la seconda, centrata e un po' più piccola
       gifContainer.innerHTML = `
-        <div class="tenor-gif-embed" data-postid="3971686153073610452" data-share-method="host" data-aspect-ratio="1" data-width="80%">
-          <a href="https://tenor.com/view/cat-jump-happy-happy-happy-gif-3971686153073610452">
-            Cat Jump Sticker
-          </a>
-          from <a href="https://tenor.com/search/cat+jump-stickers">Cat Jump Stickers</a>
+        <div style="margin: 0 auto; width: 100%; height: 100%;">
+          <div class="tenor-gif-embed" data-postid="3971686153073610452" data-share-method="host" data-aspect-ratio="1" data-width="70%">
+            <a href="https://tenor.com/view/cat-jump-happy-happy-happy-gif-3971686153073610452">
+              Cat Jump Sticker
+            </a>
+            from <a href="https://tenor.com/search/cat+jump-stickers">Cat Jump Stickers</a>
+          </div>
         </div>
       `;
-      // Creiamo dinamicamente il tag <script> per re-inizializzare l'embed di Tenor
+      // Crea e aggiunge dinamicamente il tag <script> per re-inizializzare l'embed di Tenor
       const newScript = document.createElement('script');
       newScript.type = 'text/javascript';
       newScript.async = true;
       newScript.src = 'https://tenor.com/embed.js';
       gifContainer.appendChild(newScript);
-      // Reset delle trasformazioni per evitare artifact
+
+      // Resetta le trasformazioni dei bottoni per evitare artifact
       yesButton.style.transform = 'scale(1)';
       noButton.style.transform = 'scale(1)';
-      // Rimuoviamo completamente i bottoni per evitare residui visivi
+      // Rimuove i bottoni per evitare residui
       buttonContainer.innerHTML = '';
     });
 
-    // Azione per il tasto "No"
+    // Azione per il tasto "No": effetto doppio
     noButton.addEventListener('click', () => {
-      noScale *= 0.9;
+      noScale *= 0.5; // Il tasto No diventa il doppio più piccolo
       noButton.style.transform = `scale(${noScale})`;
-      yesScale *= 1.1;
+      yesScale *= 2;  // Il tasto Sì diventa il doppio più grande
       yesButton.style.transform = `scale(${yesScale})`;
     });
   </script>
