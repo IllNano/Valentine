@@ -30,7 +30,6 @@
       word-wrap: break-word;
     }
 
-    /* Animazione per il titolo */
     @keyframes slideIn {
       from {
         opacity: 0;
@@ -41,16 +40,17 @@
         transform: translateY(0);
       }
     }
+
     .animate-title {
       animation: slideIn 0.5s ease forwards;
     }
 
-    /* Contenitore della prima GIF */
     #gif-container {
       width: 450px !important;
       height: 450px !important;
       margin-bottom: 30px;
     }
+
     #gif-container iframe,
     #gif-container img {
       width: 100% !important;
@@ -58,7 +58,6 @@
       object-fit: cover;
     }
 
-    /* Contenitore dei bottoni */
     .button-container {
       display: flex;
       gap: 20px;
@@ -66,6 +65,7 @@
       margin-top: -10px;
       position: relative;
     }
+
     .button {
       font-family: 'Pacifico', cursive;
       padding: 25px 50px;
@@ -75,56 +75,58 @@
       cursor: pointer;
       transition: transform 0.2s ease;
     }
+
     .button:hover {
       transform: scale(1.1);
     }
+
     .yes {
       background-color: #66ff66;
       color: #fff;
     }
+
     .no {
       background-color: #ff6666;
       color: #fff;
     }
 
-    /* Adattamenti per dispositivi mobili */
     @media (max-width: 600px) {
       #gif-container {
         width: 80vw !important;
         height: 80vw !important;
       }
+
       h1 {
         font-size: 3rem;
       }
+
       .button {
         padding: 20px 30px;
         font-size: 1.75rem;
       }
     }
+
+    #background-audio {
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <!-- Musica di sottofondo -->
-  <iframe
-    src="https://www.youtube.com/embed/gVS_ZLBPEck?autoplay=1&loop=1&playlist=gVS_ZLBPEck"
-    width="0"
-    height="0"
-    frameborder="0"
-    allow="autoplay"
-    style="display: none;">
-  </iframe>
-
   <h1>Will you be my Valentine?</h1>
   <div id="gif-container" class="tenor-gif-embed" 
        data-postid="16191851" data-share-method="host" data-aspect-ratio="1" data-width="100%">
     <a href="https://tenor.com/view/love-loving-hold-hands-rub-face-gif-16191851">Love Loving Sticker</a>
     from <a href="https://tenor.com/search/love-stickers">Love Stickers</a>
   </div>
-  <!-- Script per l'embedding iniziale della GIF -->
   <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-  
+
+  <!-- Audio di sottofondo -->
+  <audio id="background-audio" autoplay loop>
+    <source src="https://www.youtube.com/embed/gVS_ZLBPEck?autoplay=1" type="audio/mpeg">
+    Il tuo browser non supporta l'elemento audio.
+  </audio>
+
   <div class="button-container" id="button-container">
-    <!-- Sostituito "Sì" con "Szi <3" -->
     <button class="button yes" id="yes-btn">Szi <3</button>
     <button class="button no" id="no-btn">Mi uncia</button>
   </div>
@@ -145,7 +147,6 @@
     noButton.addEventListener('click', () => {
       noPressCount++;
 
-      // Imposta i testi progressivi del bottone "No"
       if (noPressCount === 1) {
         noButton.innerText = "Ti prego";
       } else if (noPressCount === 2) {
@@ -162,7 +163,6 @@
         noButton.innerText = "Subita Max";
       }
 
-      // Imposta la posizione iniziale dei bottoni
       if (!initialPositionsSet) {
         initialNoLeft = noButton.offsetLeft;
         initialNoTop = noButton.offsetTop;
@@ -175,22 +175,19 @@
         initialPositionsSet = true;
       }
 
-      // Scala i bottoni (fattore 1.3x)
-      noScale *= (1 / 1.3); // "No" diventa 1.3 volte più piccolo
+      noScale *= (1 / 1.3);
       noButton.style.transform = `scale(${noScale})`;
-      yesScale *= 1.3;      // "Szi <3" diventa 1.3 volte più grande
+      yesScale *= 1.3;
       yesButton.style.transform = `scale(${yesScale})`;
     });
 
     yesButton.addEventListener('click', () => {
-      // Aggiorna il titolo in "YIPPIIEEE!" (font-size ridotto, testo in una sola riga)
       h1.textContent = "YIPPIIEEE!";
       h1.style.fontSize = "3rem";
       h1.style.whiteSpace = "nowrap";
       h1.style.overflow = "hidden";
       h1.classList.add("animate-title");
 
-      // Sostituisce la prima GIF con la seconda (embed centrato, data-width="70%")
       gifContainer.innerHTML = `
         <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
           <div class="tenor-gif-embed" data-postid="3971686153073610452" data-share-method="host" data-aspect-ratio="1" data-width="70%">
@@ -201,14 +198,13 @@
           </div>
         </div>
       `;
-      // Re-inizializza l'embed di Tenor per la seconda GIF
+
       const newScript = document.createElement('script');
       newScript.type = 'text/javascript';
       newScript.async = true;
       newScript.src = 'https://tenor.com/embed.js';
       gifContainer.appendChild(newScript);
 
-      // Aggiunge sotto la seconda GIF il testo "Ti Amo <3"
       const loveText = document.createElement('div');
       loveText.innerText = "Ti Amo <3";
       loveText.style.fontSize = "10vw";
@@ -216,11 +212,9 @@
       loveText.style.textAlign = "center";
       loveText.style.marginTop = "10px";
       loveText.style.fontFamily = "'Pacifico', cursive";
-      // Imposta lo stesso colore del testo (es. come il titolo)
       loveText.style.color = "#ff4d4d";
       gifContainer.appendChild(loveText);
 
-      // Resetta le trasformazioni e rimuove il container dei bottoni
       yesButton.style.transform = "scale(1)";
       noButton.style.transform = "scale(1)";
       buttonContainer.innerHTML = "";
