@@ -17,7 +17,7 @@
       padding: 10px;
       background-color: #ffe6e6;
       font-family: Arial, sans-serif;
-      overflow-x: hidden; /* Evita scroll orizzontale */
+      overflow-x: hidden; /* Evita lo scroll orizzontale */
     }
 
     h1 {
@@ -30,11 +30,20 @@
       word-wrap: break-word;
     }
 
-    /* Contenitore della gif */
+    /* Forziamo il contenitore della gif a essere quadrato,
+       sovrascrivendo eventuali stili inline con !important */
     #gif-container {
-      width: 500px;
-      height: 500px;
+      width: 500px !important;
+      height: 500px !important;
       margin-bottom: 50px;
+    }
+
+    /* Se l’embed inserisce un iframe o un’immagine, forziamo le dimensioni */
+    #gif-container iframe,
+    #gif-container img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover;
     }
 
     .button-container {
@@ -67,11 +76,11 @@
       color: #fff;
     }
 
-    /* Media query per dispositivi mobili */
+    /* Adattamento per dispositivi mobili */
     @media (max-width: 600px) {
       #gif-container {
-        width: 90vw;
-        height: 90vw;  /* Mantiene il contenitore quadrato */
+        width: 90vw !important;
+        height: 90vw !important;
       }
       h1 {
         font-size: 2rem;
@@ -86,12 +95,18 @@
 </head>
 <body>
   <h1>Will you be my Valentine?</h1>
-  <div id="gif-container" class="tenor-gif-embed" data-postid="16191851" data-share-method="host" data-aspect-ratio="1.23552" data-width="20%">
+  <!-- 
+       Modifichiamo anche gli attributi di embed:
+       - data-aspect-ratio è impostato a "1" per forzare un rapporto quadrato;
+       - data-width è impostato a "100%" in modo da usare l'intera larghezza del contenitore.
+  -->
+  <div id="gif-container" class="tenor-gif-embed" data-postid="16191851" data-share-method="host" data-aspect-ratio="1" data-width="100%">
     <a href="https://tenor.com/view/love-loving-hold-hands-rub-face-gif-16191851">Love Loving Sticker</a>
     from <a href="https://tenor.com/search/love-stickers">Love Stickers</a>
   </div>
   <!-- Script per l'embedding iniziale della gif -->
   <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+  
   <div class="button-container">
     <button class="button yes">Sì</button>
     <button class="button no">No</button>
@@ -104,7 +119,6 @@
     const h1 = document.querySelector('h1');
     const buttonContainer = document.querySelector('.button-container');
 
-    // Variabili per tenere traccia della scala corrente dei bottoni
     let yesScale = 1;
     let noScale = 1;
 
@@ -119,22 +133,20 @@
           from <a href="https://tenor.com/search/cat+jump-stickers">Cat Jump Stickers</a>
         </div>
       `;
-      // Crea e aggiunge dinamicamente il tag <script> per re-inizializzare l'embedding di Tenor
+      // Creiamo dinamicamente il tag <script> per re-inizializzare l'embed di Tenor
       const newScript = document.createElement('script');
       newScript.type = 'text/javascript';
       newScript.async = true;
       newScript.src = 'https://tenor.com/embed.js';
       gifContainer.appendChild(newScript);
-      // Nasconde i tasti
+      // Nascondiamo i bottoni
       buttonContainer.style.display = 'none';
     });
 
     // Azione per il tasto "No"
     noButton.addEventListener('click', () => {
-      // Riduce la scala del bottone "No"
       noScale *= 0.9;
       noButton.style.transform = `scale(${noScale})`;
-      // Aumenta la scala del bottone "Sì"
       yesScale *= 1.1;
       yesButton.style.transform = `scale(${yesScale})`;
     });
