@@ -20,10 +20,21 @@
       min-height: 100vh;
       margin: 0;
       padding-top: 10px;
-      background: url('sfondo.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background-color: #ffe6e6; /* Sfondo ripristinato */
       font-family: 'cuori2', Arial, sans-serif;
       overflow-x: hidden;
+    }
+    /* Animazione Bounce per il titolo della landing page */
+    @keyframes bounceIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      60% { transform: scale(1.05); opacity: 1; }
+      80% { transform: scale(0.95); }
+      100% { transform: scale(1); }
+    }
+    /* Animazione fadeIn per le GIF */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     h1 {
       font-family: 'cuori2', Arial, sans-serif;
@@ -43,6 +54,10 @@
       width: 100%;
       height: 100vh;
     }
+    /* Applica l'animazione Bounce al titolo della landing page */
+    #landing-page h1 {
+      animation: bounceIn 1s ease;
+    }
     /* Tasto della landing page */
     #landing-btn {
       background-color: #e3445c;
@@ -53,10 +68,11 @@
       padding: 25px 50px;
       font-size: 2rem;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     #landing-btn:hover {
       transform: scale(1.1);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     }
     /* Pulsanti nella main page */
     .button {
@@ -66,7 +82,7 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       transform-origin: center;
       flex-shrink: 0;
     }
@@ -81,12 +97,14 @@
     }
     .button:hover {
       transform: scale(1.1);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     }
-    /* Contenitore per la gif dei baci (dimensioni ridotte) */
+    /* Contenitore per la gif dei baci (ulteriormente ridotto) */
     #gif-container1 {
       width: 90vw !important;
-      max-width: 300px;
+      max-width: 250px;
       margin-bottom: 10px;
+      animation: fadeIn 1s ease-in-out;
     }
     #gif-container1 img {
       width: 100% !important;
@@ -96,11 +114,12 @@
       margin: 0 auto;
       padding: 0;
     }
-    /* Contenitore per la gif yippie (dimensioni ridotte) */
+    /* Contenitore per la gif yippie (ulteriormente ridotto) */
     #gif-container2 {
       width: 90vw !important;
-      max-width: 300px;
+      max-width: 250px;
       margin-bottom: 10px;
+      animation: fadeIn 1s ease-in-out;
     }
     #gif-container2 img {
       width: 100% !important;
@@ -126,7 +145,7 @@
       gap: 10px;
       justify-content: center;
       width: 100%;
-      max-width: 300px;
+      max-width: 250px;
     }
     @keyframes slideIn {
       from {
@@ -166,7 +185,7 @@
 
   <!-- Landing Page -->
   <div id="landing-page">
-    <h1>Ciao Amore!!4</h1>
+    <h1>Ciao Amore!!5</h1>
     <button id="landing-btn" class="button">Ciao patators!!</button>
   </div>
 
