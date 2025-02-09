@@ -112,13 +112,13 @@
 <body>
   <h1>Will you be my Valentine?</h1>
 
-  <!-- Audio per la musica di sottofondo iniziale -->
-  <audio id="bg-music-initial" loop autoplay style="display: none;">
+  <!-- Audio per la musica iniziale (forever.mp3) -->
+  <audio id="bg-music-initial" loop style="display: none;">
     <source src="forever.mp3" type="audio/mpeg">
     Il tuo browser non supporta l'elemento audio.
   </audio>
 
-  <!-- Audio per la musica che parte quando premi "Szi" -->
+  <!-- Audio per la musica che parte quando si preme "Szi" (yippie.mp3) -->
   <audio id="bg-music-yes" loop style="display: none;">
     <source src="yippie.mp3" type="audio/mpeg">
     Il tuo browser non supporta l'elemento audio.
@@ -154,7 +154,11 @@
     noButton.addEventListener('click', () => {
       noPressCount++;
 
+      // Al primo click sul pulsante "Mi uncia", se la musica iniziale non sta già suonando, la avvio
       if (noPressCount === 1) {
+        if (initialMusic.paused) {
+          initialMusic.play().catch((error) => console.log("Errore durante la riproduzione della musica iniziale:", error));
+        }
         noButton.innerText = "Ti prego";
       } else if (noPressCount === 2) {
         noButton.innerText = "Per favore :(";
@@ -183,7 +187,7 @@
       }
       if (yesMusic) {
         yesMusic.currentTime = 0;
-        yesMusic.play();
+        yesMusic.play().catch((error) => console.log("Errore durante la riproduzione della musica per Szi:", error));
       }
 
       h1.textContent = "YIPPIIEEE!";
