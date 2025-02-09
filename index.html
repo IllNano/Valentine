@@ -11,33 +11,33 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start; /* Contenuto allineato in alto */
       min-height: 100vh;
       margin: 0;
-      padding: 10px;
+      padding-top: 10px; /* Poco spazio sopra */
       background-color: #ffe6e6;
       font-family: Arial, sans-serif;
-      overflow-x: hidden; /* Evita scroll orizzontale */
+      overflow-x: hidden;
     }
 
     h1 {
       font-family: 'Pacifico', cursive;
-      font-size: 4.5rem; /* Titolo più grande */
+      font-size: 4.5rem; /* Titolo grande su desktop */
       color: #ff4d4d;
-      margin-bottom: 30px;
+      margin: 10px 0 30px; /* Poco spazio sopra, 30px sotto */
       text-align: center;
       max-width: 90vw;
       word-wrap: break-word;
     }
 
-    /* Contenitore della gif: dimensioni leggermente ridotte e forzate a quadrato */
+    /* Contenitore della gif (primo embed) */
     #gif-container {
       width: 450px !important;
       height: 450px !important;
-      margin-bottom: 30px; /* Meno spazio in basso per spostare i bottoni in alto */
+      margin-bottom: 30px;
     }
 
-    /* Forza la gif (iframe o img) a occupare tutto il contenitore */
+    /* Forza eventuali elementi (iframe o img) a occupare tutto il contenitore */
     #gif-container iframe,
     #gif-container img {
       width: 100% !important;
@@ -45,7 +45,7 @@
       object-fit: cover;
     }
 
-    /* Bottoni allineati orizzontalmente, spostati leggermente in alto */
+    /* Bottoni allineati orizzontalmente e spostati un po' più in alto */
     .button-container {
       display: flex;
       gap: 20px;
@@ -86,7 +86,6 @@
       }
       h1 {
         font-size: 3rem;
-        max-width: 90vw;
       }
       .button {
         padding: 20px 30px;
@@ -123,19 +122,24 @@
     yesButton.addEventListener('click', () => {
       h1.textContent = 'YIIIPPIIIEEEEE!!!';
       gifContainer.innerHTML = `
-        <div class="tenor-gif-embed" data-postid="3971686153073610452" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+        <div class="tenor-gif-embed" data-postid="3971686153073610452" data-share-method="host" data-aspect-ratio="1" data-width="80%">
           <a href="https://tenor.com/view/cat-jump-happy-happy-happy-gif-3971686153073610452">
-            Cat Jump Happy Happy Happy Sticker
+            Cat Jump Sticker
           </a>
           from <a href="https://tenor.com/search/cat+jump-stickers">Cat Jump Stickers</a>
         </div>
       `;
+      // Creiamo dinamicamente il tag <script> per re-inizializzare l'embed di Tenor
       const newScript = document.createElement('script');
       newScript.type = 'text/javascript';
       newScript.async = true;
       newScript.src = 'https://tenor.com/embed.js';
       gifContainer.appendChild(newScript);
-      buttonContainer.style.display = 'none';
+      // Reset delle trasformazioni per evitare artifact
+      yesButton.style.transform = 'scale(1)';
+      noButton.style.transform = 'scale(1)';
+      // Rimuoviamo completamente i bottoni per evitare residui visivi
+      buttonContainer.innerHTML = '';
     });
 
     // Azione per il tasto "No"
