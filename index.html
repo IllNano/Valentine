@@ -12,20 +12,23 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
+      padding: 10px;
       background-color: #ffe6e6;
       font-family: Arial, sans-serif;
     }
 
     h1 {
       font-family: 'Pacifico', cursive;
-      font-size: 3rem; /* Titolo a 3rem */
+      font-size: 3rem;
       color: #ff4d4d;
       margin-bottom: 30px;
+      text-align: center;
     }
 
-    .tenor-gif-embed {
+    /* Contenitore della gif */
+    #gif-container {
       width: 300px;
       height: 300px;
       margin-bottom: 50px;
@@ -59,6 +62,27 @@
       background-color: #ff6666;
       color: #fff;
     }
+
+    /* Media query per dispositivi con schermo piccolo */
+    @media (max-width: 600px) {
+      #gif-container {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+      }
+      .button-container {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        align-items: center;
+      }
+      .button {
+        width: 100%;
+        max-width: 300px;
+        padding: 15px;
+        font-size: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -87,10 +111,7 @@
 
     // Azione per il tasto Sì
     yesButton.addEventListener('click', () => {
-      // Cambia il testo del titolo
-      h1.textContent = 'YIIIPPIIIEEEEE!!';
-
-      // Sostituisce la gif con quella nuova (senza il tag <script>)
+      h1.textContent = 'YIIIPPIIIEEEEE!!!';
       gifContainer.innerHTML = `
         <div class="tenor-gif-embed" data-postid="3971686153073610452" data-share-method="host" data-aspect-ratio="1" data-width="100%">
           <a href="https://tenor.com/view/cat-jump-happy-happy-happy-gif-3971686153073610452">
@@ -99,24 +120,21 @@
           from <a href="https://tenor.com/search/cat+jump-stickers">Cat Jump Stickers</a>
         </div>
       `;
-
       // Crea e aggiunge dinamicamente il tag <script> per re-inizializzare l'embedding Tenor
       const newScript = document.createElement('script');
       newScript.type = 'text/javascript';
       newScript.async = true;
       newScript.src = 'https://tenor.com/embed.js';
       gifContainer.appendChild(newScript);
-
       // Nasconde i tasti
       buttonContainer.style.display = 'none';
     });
 
     // Azione per il tasto No
     noButton.addEventListener('click', () => {
-      // Riduce la scala del bottone "No" (l'intero bottone diventa più piccolo)
+      // Riduce la scala del bottone "No"
       noScale *= 0.9;
       noButton.style.transform = `scale(${noScale})`;
-
       // Aumenta la scala del bottone "Sì"
       yesScale *= 1.1;
       yesButton.style.transform = `scale(${yesScale})`;
